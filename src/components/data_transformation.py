@@ -1,21 +1,23 @@
+
 import sys
-import os
 from dataclasses import dataclass
 
-import numpy as np
+import numpy as np 
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder,StandardScaler
 
+
 from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
-
 from exception import CustomException
 sys.path.append(str(Path(__file__).parent.parent))
+from pathlib import Path
 from logger import logging
-
+sys.path.append(str(Path(__file__).parent.parent))
+import os
 sys.path.append(str(Path(__file__).parent.parent))
 from utils import save_object
 
@@ -32,6 +34,7 @@ class DataTransformation:
         This function si responsible for data trnasformation
         
         '''
+        
         try:
             numerical_columns = ["writing score", "reading score"]
             categorical_columns = [
@@ -79,7 +82,8 @@ class DataTransformation:
             raise CustomException(e,sys)
         
     def initiate_data_transformation(self,train_path,test_path):
-
+        
+        
         try:
             train_df=pd.read_csv(train_path)
             test_df=pd.read_csv(test_path)
@@ -91,7 +95,7 @@ class DataTransformation:
             preprocessing_obj=self.get_data_transformer_object()
 
             target_column_name="math score"
-            numerical_columns = ["writing score", "reading score"]
+            numerical_columns = ["writing core", "reading score"]
 
             input_feature_train_df=train_df.drop(columns=[target_column_name],axis=1)
             target_feature_train_df=train_df[target_column_name]
@@ -123,7 +127,7 @@ class DataTransformation:
             return (
                 train_arr,
                 test_arr,
-                self.data_transformation_config.preprocessor_obj_file_path,
+                self.data_transformation_config.preprocessor_obj_file_path
             )
         except Exception as e:
             raise CustomException(e,sys)
